@@ -12,23 +12,29 @@
     "serve": "cross-env NODE_ENV=production node ./server.js"
   },
   "dependencies": {
-    "compression": "^1.7.4",
-    "express": "^4.19.2",
-    "primeflex": "^3.3.1",
-    "primeicons": "^7.0.0",
-    "primereact": "^10.8.2",
+    "@mantine/core": "^7.12.1",
+    "@mantine/dates": "^7.12.1",
+    "@mantine/hooks": "^7.12.1",
+    "@mantine/modals": "^7.12.1",
+    "@tanstack/react-query": "^5.52.1",
+    "dayjs": "^1.11.13",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.26.1",
-    "sass-embedded": "^1.77.8",
     "sirv": "^2.0.4",
-    "vike": "^0.4.184"
+    "vike": "^0.4.184",
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
     "@types/react": "^18.2.79",
     "@types/react-dom": "^18.2.25",
     "@vitejs/plugin-react": "^4.2.1",
+    "compression": "^1.7.4",
     "cross-env": "^7.0.3",
+    "express": "^4.19.2",
+    "postcss": "^8.4.41",
+    "postcss-preset-mantine": "^1.17.0",
+    "postcss-simple-vars": "^7.0.1",
     "vite": "^5.2.10"
   }
 }

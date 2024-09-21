@@ -1,12 +1,23 @@
-import Layout from "./layout/Layout";
 
-const App = ({ children }) => (
-  <div className="app">
-    <Layout>
+import React from 'react';
+import { useAccount } from './app/queries/account.mjs';
+
+const App = ({ children }) => {
+  const { data, error, isError, isLoading, isFetching } = useAccount();
+
+  console.log('render', isFetching);
+  if (isLoading) {
+    return null;
+  }
+
+  return (
+    <div className="app">
+
       {children}
-    </Layout>
-  </div>
-);
+
+    </div>
+  )
+};
 
 
-export default App;
+export default React.memo(App);
