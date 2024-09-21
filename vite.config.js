@@ -11,5 +11,8 @@ export default defineConfig({
   },
   plugins: [
     react()
+  ],
+  assetsInclude: [
+    'src/docs/**/*.md'
   ]
 })
