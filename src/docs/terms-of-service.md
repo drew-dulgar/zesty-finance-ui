@@ -16,24 +16,29 @@ You must be at least 18 years old and legally capable of entering into contracts
 
 - **Informational Purposes Only:** The Website provides tools for entering, tracking, and analyzing trades. The information provided on the Website is for informational purposes only and does not constitute financial, investment, legal, or other professional advice. You are solely responsible for the decisions you make based on information obtained from the Website.
 - **No Guarantee of Accuracy:** While we strive to maintain accurate and updated information, [Website Name] makes no guarantees regarding the accuracy, reliability, or completeness of any data or content on the Website, including trade information you or other users provide.
+- **License to Use Data:** By submitting data to the Website, you grant [Website Name] a non-exclusive, royalty-free, worldwide, and perpetual license to use, copy, modify, and distribute the data you submit, provided that such data is used in anonymized and aggregated form without revealing personally identifiable information.
 
 ## 4. User Responsibilities
 
 - **User-Entered Data:** You are responsible for the accuracy of the trade data you enter on the Website. The Website will not verify or validate any user-entered information. You agree not to enter false, misleading, or incomplete information.
 - **Compliance with Laws:** You agree to comply with all applicable laws, rules, and regulations, including those related to trading, financial markets, and data protection when using the Website.
-- **Prohibited Activities:** You agree not to engage in any illegal, harmful, or unauthorized activities on the Website, including but not limited to: 
+- **Prohibited Activities:** You agree not to engage in any illegal, harmful, or unauthorized activities on the Website, including but not limited to:
   - Falsifying trade data.
   - Attempting to breach the security of the Website.
   - Using bots or automated systems to access the Website.
 
 ## 5. No Financial, Legal, or Investment Advice
 
-The content and tools available on this Website are for informational purposes only. [Website Name] is not a registered financial advisor, broker, or dealer. You should not rely on any content on this Website as the basis for making financial, investment, or trading decisions. Always consult with a qualified professional before making any such decisions. 
+The content and tools available on this Website are for informational purposes only. [Website Name] is not a registered financial advisor, broker, or dealer. You should not rely on any content on this Website as the basis for making financial, investment, or trading decisions. Always consult with a qualified professional before making any such decisions.
 
 ## 6. Limitation of Liability
 
 - **No Warranty:** The Website and the Services are provided on an "as-is" and "as-available" basis without warranties of any kind, either express or implied. [Website Name] does not guarantee that the Website will be uninterrupted, secure, error-free, or that any defects will be corrected.
   
+- **Third-Party Liability:** [Website Name] is not responsible for failures or damages arising from the use of third-party services, including but not limited to hosting services, payment processors, or analytics tools.
+
+- **Data Breaches:** Despite our efforts to secure your personal information, no security measures are impenetrable. In the event of a data breach or unauthorized access to your information, we will take prompt measures to investigate and mitigate the situation. However, you acknowledge that [Website Name] is not liable for any unauthorized access to, alteration, or loss of your data.
+
 - **Limitation of Liability:** To the fullest extent permitted by law, [Website Name], its officers, directors, employees, agents, or affiliates will not be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising from or related to your use of the Website, including but not limited to:
   - Any errors or omissions in content or data.
   - The reliance on or misuse of any information obtained from the Website.
@@ -47,9 +52,11 @@ You agree to indemnify and hold harmless [Website Name], its affiliates, and the
 - Your violation of these Terms.
 - Any information you submit or trade you enter into the Website.
 
-## 8. Privacy and Data Protection
+## 8. Privacy, Data Use, and Sharing
 
-Your privacy is important to us. Please refer to our [Privacy Policy] for information on how we collect, use, and protect your personal data. By using the Website, you consent to the collection and use of your data in accordance with the Privacy Policy.
+- **Data Privacy:** Your privacy is important to us. Please refer to our [Privacy Policy] for information on how we collect, use, and protect your personal data. By using the Website, you consent to the collection and use of your data in accordance with the Privacy Policy.
+- **Non-Identifiable Data Sharing:** You acknowledge and agree that the data you enter on the Website may be aggregated, anonymized, and used for reporting, analysis, and statistical purposes. This shared data will **not include personally identifiable information** (PII). We may share such aggregated, non-identifiable data with third parties, including but not limited to research organizations, advertisers, or business partners for purposes such as improving the Services, generating insights, and reporting.
+- **Internal Use:** The non-identifiable data may also be used internally by [Website Name] for product development, performance monitoring, and other analytical purposes.
 
 ## 9. Modifications to the Website and Services
 
@@ -61,7 +68,7 @@ We reserve the right to suspend or terminate your access to the Website at our s
 
 ## 11. Governing Law and Dispute Resolution
 
-These Terms are governed by and construed in accordance with the laws of [Jurisdiction]. Any dispute arising out of or related to these Terms or your use of the Website shall be resolved through binding arbitration in [City, State/Country], unless otherwise agreed by the parties.
+These Terms are governed by and construed in accordance with the laws of [Jurisdiction]. Any dispute arising out of or related to these Terms or your use of the Website shall be resolved through **binding arbitration** under the rules of [specific arbitration body] in [city/state/country]. Both parties waive the right to a jury trial or to participate in a class-action lawsuit.
 
 ## 12. Changes to the Terms of Service
 
