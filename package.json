@@ -16,7 +16,7 @@
     "@mantine/dates": "^7.12.1",
     "@mantine/hooks": "^7.12.1",
     "@mantine/modals": "^7.12.2",
-    "@tanstack/react-query": "^5.52.1",
+    "@tanstack/react-query": "^5.56.2",
     "dayjs": "^1.11.13",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
