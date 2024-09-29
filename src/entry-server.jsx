@@ -1,23 +1,50 @@
-import React from 'react';
-import ReactDOMServer from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom/server';
-import { ColorSchemeScript } from '@mantine/core';
-import Router from './Router';
-import Entry from './Entry';
+import { pipeline } from 'node:stream/promises'
+import { createRequestHandler, defaultStreamHandler} from '@tanstack/start/server'
+import router from './router';
 
-const render = (path) => {
-  const html = ReactDOMServer.renderToString(
-    <Entry>
-      <StaticRouter location={path}>
-        <Router />
-      </StaticRouter>
-    </Entry>
-  );
+export const render = async({
+  req,
+  res,
+  head,
+}) => {
+  // Convert the express request to a fetch request
+  const url = new URL(req.originalUrl || req.url, 'https://localhost:3050').href
+  const request = new Request(url, {
+    method: req.method,
+    headers: (() => {
+      const headers = new Headers()
+      for (const [key, value] of Object.entries(req.headers)) {
+        headers.set(key, value)
+      }
+      return headers;
+    })(),
+  })
 
-  const head = ReactDOMServer.renderToString(
-    <ColorSchemeScript />
-  );
-  return { html, head };
+  // Create a request handler
+  const handler = createRequestHandler({
+    request,
+    createRouter: () => {
+      // Update each router instance with the head info from vite
+      router.update({
+        context: {
+          ...router.options.context,
+          head: head,
+        },
+      })
+      return router;
+    },
+  })
+
+  // Let's use the default stream handler to create the response
+  const response = await handler(defaultStreamHandler);
+
+  // Convert the fetch response back to an express response
+  res.statusMessage = response.statusText;
+  res.status(response.status);
+  response.headers.forEach((value, name) => {
+    res.setHeader(name, value)
+  });
+
+  // Stream the response body
+  return pipeline(response.body, res);
 }
-
-export { render };
