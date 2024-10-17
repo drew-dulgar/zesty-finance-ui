@@ -1,36 +1,28 @@
 import BaseService from '../lib/BaseService.mjs';
 
 class AccountService extends BaseService {
- get() {
-    return super.GET('/');
-  }
+  get = () => super.GET('/');
 
-  create({
+  create = ({
     email,
     password,
     firstName,
     middleName,
     lastName
-  } = {}) {
-    return super.POST('/create', {
-      email,
-      password,
-      firstName,
-      middleName,
-      lastName
-    });
-  }
+  } = {}) => super.POST('/create', {
+    email,
+    password,
+    firstName,
+    middleName,
+    lastName
+  });
 
-  authorize(email, password) {
-    return super.POST('/auth', {
-      email,
-      password
-    });
-  }
+  authorize = ({email, password} = {}) => super.POST('/auth', {
+    email,
+    password
+  });
 
-  logout() {
-    return super.DELETE('/auth');
-  }
+  logout = () => super.DELETE('/auth');
 }
 
 export default new AccountService('/account');

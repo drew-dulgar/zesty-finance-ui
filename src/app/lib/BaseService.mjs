@@ -10,11 +10,11 @@ class BaseService {
 
   buildUrl(endpoint, queryParams = {}) {
     let url = `${this.baseUrl}${(this.baseEndpoint + '/' + endpoint).replace('//', '/')}`;
-
+      
     if (url.charAt(url.length - 1) === '/') {
       url = url.slice(0, -1);
     }
-
+  
     if (Object.keys(queryParams).length > 0) {
       Object.keys(queryParams).forEach((key) => {
         if (typeof queryParams[key] === 'undefined') {
@@ -24,7 +24,7 @@ class BaseService {
 
       url += `?${new URLSearchParams(queryParams)}`;
     }
-
+    
     return url;
   }
 

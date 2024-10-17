@@ -6,7 +6,8 @@ export const QUERY_ACCOUNT_CREATE = 'QUERY_ACCOUNT_CREATE';
 export const QUERY_ACCOUNT_AUTHORIZE = 'QUERY_ACCOUNT_AUTHORIZE';
 export const QUERY_ACCOUNT_LOGOUT = 'QUERY_ACCOUNT_LOGOUT';
 
-export const useAccount = () => useQuery({
+export const useAccount = (options = {}) => useQuery({
+  ...options,
   queryKey: [QUERY_ACCOUNT],
   queryFn: () => AccountService.get(),
   staleTime: Infinity,
@@ -17,17 +18,20 @@ export const useAccount = () => useQuery({
   }
 });
 
-export const useAccountCreate = (args = {}) => useMutation({
-  mutationKey: [QUERY_ACCOUNT_CREATE, args],
-  mutationFn: () => AccountService.create(args),
+export const useAccountCreate = (options = {}) => useMutation({
+  ...options,
+  mutationKey: [QUERY_ACCOUNT_CREATE],
+  mutationFn: AccountService.create
 });
 
-export const  useAccountAuthorize = (email, password) => useMutation({
-  mutationKey: [QUERY_ACCOUNT_AUTHORIZE, email],
-  mutationFn: () => AccountService.authorize(email, password)
+export const useAccountAuthorize = (options = {}) => useMutation({
+  ...options,
+  mutationKey: [QUERY_ACCOUNT_AUTHORIZE],
+  mutationFn: AccountService.authorize,
 });
 
-export const  useAccountLogout = () => useMutation({
+export const useAccountLogout = (options = {}) => useMutation({
+  ...options,
   mutationKey: [QUERY_ACCOUNT_LOGOUT],
   mutationFn: AccountService.logout
 });

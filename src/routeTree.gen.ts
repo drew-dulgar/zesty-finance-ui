@@ -12,11 +12,23 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as AccountRegisterImport } from './routes/account/register'
+import { Route as AccountLoginImport } from './routes/account/login'
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AccountRegisterRoute = AccountRegisterImport.update({
+  path: '/account/register',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AccountLoginRoute = AccountLoginImport.update({
+  path: '/account/login',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -31,6 +43,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/account/login': {
+      id: '/account/login'
+      path: '/account/login'
+      fullPath: '/account/login'
+      preLoaderRoute: typeof AccountLoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/account/register': {
+      id: '/account/register'
+      path: '/account/register'
+      fullPath: '/account/register'
+      preLoaderRoute: typeof AccountRegisterImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -38,32 +64,42 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/account/login': typeof AccountLoginRoute
+  '/account/register': typeof AccountRegisterRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/account/login': typeof AccountLoginRoute
+  '/account/register': typeof AccountRegisterRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/account/login': typeof AccountLoginRoute
+  '/account/register': typeof AccountRegisterRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/account/login' | '/account/register'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/account/login' | '/account/register'
+  id: '__root__' | '/' | '/account/login' | '/account/register'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AccountLoginRoute: typeof AccountLoginRoute
+  AccountRegisterRoute: typeof AccountRegisterRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AccountLoginRoute: AccountLoginRoute,
+  AccountRegisterRoute: AccountRegisterRoute,
 }
 
 export const routeTree = rootRoute
@@ -78,11 +114,19 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.jsx",
       "children": [
-        "/"
+        "/",
+        "/account/login",
+        "/account/register"
       ]
     },
     "/": {
       "filePath": "index.jsx"
+    },
+    "/account/login": {
+      "filePath": "account/login.jsx"
+    },
+    "/account/register": {
+      "filePath": "account/register.jsx"
     }
   }
 }

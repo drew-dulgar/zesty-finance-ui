@@ -14,6 +14,13 @@ export default defineConfig({
     TanStackRouterVite(),
     react()
   ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler' // or "modern"
+      }
+    }
+  },
   assetsInclude: [
     'src/docs/**/*.md'
   ]
