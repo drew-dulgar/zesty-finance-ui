@@ -17,7 +17,7 @@ class AccountService extends BaseService {
     lastName
   });
 
-  authorize = ({email, password} = {}) => super.POST('/auth', {
+  authenticate = ({email, password} = {}) => super.POST('/auth', {
     email,
     password
   });

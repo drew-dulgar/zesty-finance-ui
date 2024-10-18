@@ -24,10 +24,10 @@ export const useAccountCreate = (options = {}) => useMutation({
   mutationFn: AccountService.create
 });
 
-export const useAccountAuthorize = (options = {}) => useMutation({
+export const useAccountAuthenticate = (options = {}) => useMutation({
   ...options,
   mutationKey: [QUERY_ACCOUNT_AUTHORIZE],
-  mutationFn: AccountService.authorize,
+  mutationFn: AccountService.authenticate,
 });
 
 export const useAccountLogout = (options = {}) => useMutation({

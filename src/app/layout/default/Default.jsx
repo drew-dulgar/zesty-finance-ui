@@ -4,7 +4,8 @@ import {
   AppShell,
   Burger,
   Group,
-  Skeleton
+  Skeleton,
+  Container
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useAccount } from '../../queries/account.mjs';
@@ -57,7 +58,9 @@ const Layout = ({ navbar = false }) => {
       )}
 
       <AppShell.Main>
+        <Container size={navbar ? null : 'sm'}>
         <Outlet />
+        </Container>
       </AppShell.Main>
     </AppShell>
   );

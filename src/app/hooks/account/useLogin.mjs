@@ -1,24 +1,24 @@
 import { useEffect } from 'react';
-import { useAccount, useAccountLogin} from '../../queries';
+import { useAccount, useAccountAuthenticate } from '../../queries';
 
 
 const useLogin = () => {
   const account = useAccount();
-  const accountLogin = useAccountLogin();
+  const acountAuthenticate = useAccountAuthenticate();
 
-  const login = () => {
-    accountLogin.mutate();
+  const login = (email, password) => {
+    acountAuthenticate.mutate({ email, password });
   };
 
   useEffect(() => {
-    if (accountLogin.isSuccess && accountLogin.data.success) {
-      accountLogin.refetch();
+    if (acountAuthenticate.isSuccess && acountAuthenticate.data.success) {
+      account.refetch();
     }
-  }, [accountLogin.isSuccess]);
+  }, [acountAuthenticate.isSuccess]);
 
   return {
     login,
-    isLoading: account.isLoading || accountLogin.isLoading,
+    isLoading: account.isLoading || acountAuthenticate.isLoading,
   };
 };
 
