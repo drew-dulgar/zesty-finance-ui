@@ -1,6 +1,5 @@
-import path from 'node:path'
-import express from 'express'
-import getPort, { portNumbers } from 'get-port'
+import path from 'node:path';
+import express from 'express';
 
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
 
@@ -64,28 +63,34 @@ export async function createServer(
 
       const entry = await (async () => {
         if (!isProd) {
-          return vite.ssrLoadModule('/src/entry-server.jsx')
+          return vite.ssrLoadModule('/src/entry-server.jsx');
         } else {
-          return import('./dist/server/entry-server.js')
+          return import('./dist/server/entry-server.js');
         }
-      })()
+      })();
 
       console.info('Rendering: ', url, '...')
-      entry.render({ req, res, head: viteHead })
+      const { html, router } = await entry.render(url);
+
+      res.statusCode = router.hasNotFoundMatch() ? 404 : 200
+      res.setHeader('Content-Type', 'text/html')
+      res.end(`<!DOCTYPE html>${html}`);
+
     } catch (e) {
-      !isProd && vite.ssrFixStacktrace(e)
-      console.info(e.stack)
-      res.status(500).end(e.stack)
+      !isProd && vite.ssrFixStacktrace(e);
+      console.info(e.stack);
+      res.status(500).end(e.stack);
     }
   })
 
-  return { app, vite }
+  return { app, vite };
 }
 
 if (!isTest) {
   createServer().then(async ({ app }) =>
-    app.listen(await getPort({ port: portNumbers(3050, 3100) }), () => {
-      console.info('Client Server: http://localhost:3050')
-    }),
+    // Start http server
+    app.listen(3050, () => {
+      console.log(`Server started at http://localhost:3050`);
+    })
   )
 }

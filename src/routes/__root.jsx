@@ -1,8 +1,11 @@
 import React from 'react';
 import { createRootRoute } from '@tanstack/react-router';
+import mantineCssUrl from '@mantine/core/styles.css?url'
 import DefaultLayout from '../app/layout/default/Default';
 import Error404 from '../app/components/errors/Error404';
+import RootDocument from '../RootDocument';
 import App from '../App';
+
 
 export const Route = createRootRoute({
   meta: () => [
@@ -35,12 +38,22 @@ window.__vite_plugin_react_preamble_installed__ = true`,
       src: '/src/entry-client.jsx',
     },
   ],
-  component: () => (
-    <App>
-      <DefaultLayout />
-    </App>
-  ),
-  notFoundComponent: Error404
+  links: () => [
+    { 
+      rel: 'stylesheet', 
+      href: mantineCssUrl 
+    }
+  ],
+  component: () => {
+    return (
+      <RootDocument>
+        <App>
+          <DefaultLayout />
+        </App>
+      </RootDocument>
+    );
+  },
+  notFoundComponent: Error404,
 });
 
 

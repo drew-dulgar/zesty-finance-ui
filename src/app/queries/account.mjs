@@ -15,7 +15,7 @@ export const useAccount = (options = {}) => useQuery({
   placeholderData: {
     authenticated: false,
     authorized: {}
-  }
+  },
 });
 
 export const useAccountCreate = (options = {}) => useMutation({

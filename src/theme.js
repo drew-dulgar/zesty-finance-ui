@@ -2,7 +2,7 @@ import { createTheme } from '@mantine/core';
 
 const theme = createTheme({
   primaryColor: 'cerulean',
-  defaultGradient: 'coral',
+  fontFamily: 'Tahoma, Verdana, sans-serif',
   colors: {
     'cerulean': [
       "#e9f8ff",

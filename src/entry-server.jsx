@@ -1,50 +1,26 @@
-import { pipeline } from 'node:stream/promises'
-import { createRequestHandler, defaultStreamHandler} from '@tanstack/start/server'
-import router from './router';
+import * as React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import { createMemoryHistory } from '@tanstack/react-router';
+import { StartServer } from '@tanstack/start/server';
+import createRouter from './router';
 
-export const render = async({
-  req,
-  res,
-  head,
-}) => {
-  // Convert the express request to a fetch request
-  const url = new URL(req.originalUrl || req.url, 'https://localhost:3050').href
-  const request = new Request(url, {
-    method: req.method,
-    headers: (() => {
-      const headers = new Headers()
-      for (const [key, value] of Object.entries(req.headers)) {
-        headers.set(key, value)
-      }
-      return headers;
-    })(),
-  })
+export const render = async (url) => {
+  const router = createRouter();
 
-  // Create a request handler
-  const handler = createRequestHandler({
-    request,
-    createRouter: () => {
-      // Update each router instance with the head info from vite
-      router.update({
-        context: {
-          ...router.options.context,
-          head: head,
-        },
-      })
-      return router;
-    },
-  })
-
-  // Let's use the default stream handler to create the response
-  const response = await handler(defaultStreamHandler);
-
-  // Convert the fetch response back to an express response
-  res.statusMessage = response.statusText;
-  res.status(response.status);
-  response.headers.forEach((value, name) => {
-    res.setHeader(name, value)
+  const memoryHistory = createMemoryHistory({
+    initialEntries: [url],
   });
 
-  // Stream the response body
-  return pipeline(response.body, res);
+  router.update({
+    history: memoryHistory,
+  });
+
+  await router.load();
+
+  const html = ReactDOMServer.renderToString(<StartServer router={router} />);
+
+  return {
+    html,
+    router,
+  };
 }

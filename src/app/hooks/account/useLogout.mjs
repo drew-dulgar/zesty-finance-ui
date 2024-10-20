@@ -18,7 +18,10 @@ const useLogout = () => {
 
   return {
     logout,
-    isLoading: account.isLoading || accountLogout.isLoading
+    isSuccess: accountLogout.isSuccess && account.isSuccess && account?.data?.authenticated === false,
+    isPending: accountLogout.isPending || account.isPending,
+    isError:  accountLogout.isError || account.isError,
+    error:  accountLogout.error || account.error
   };
 };
 

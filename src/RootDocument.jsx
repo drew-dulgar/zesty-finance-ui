@@ -1,8 +1,8 @@
 import React from 'react';
-import { Body, Head, Html, Meta, Scripts } from '@tanstack/start';
+import { Html, Head, Meta, Scripts, Body, } from '@tanstack/start';
 
 const RootDocument = ({ children }) => (
-  <Html>
+  <Html lang="en">
     <Head>
       <Meta />
     </Head>

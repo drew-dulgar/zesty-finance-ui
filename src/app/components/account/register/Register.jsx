@@ -1,14 +1,17 @@
 
 import { useForm } from '@mantine/form';
 import {
+  Title,
   TextInput,
   PasswordInput,
   Button,
-  Box,
+  Container,
   Group,
   Checkbox,
   Text,
+  Paper
 } from '@mantine/core';
+import AnchorLink from '../../AnchorLink';
 
 const Register = () => {
   const form = useForm({
@@ -17,7 +20,7 @@ const Register = () => {
       email: '',
       password: '',
       confirmPassword: '',
-      terms: false,
+      tos: false,
     },
 
     validate: {
@@ -27,7 +30,7 @@ const Register = () => {
         value.length >= 6 ? null : 'Password must be at least 6 characters',
       confirmPassword: (value, values) =>
         value === values.password ? null : 'Passwords do not match',
-      terms: (value) => (value ? null : 'You must accept the terms and conditions'),
+      tos: (value) => (value ? null : 'You must accept the terms and conditions'),
     },
   });
 
@@ -36,54 +39,64 @@ const Register = () => {
   };
 
   return (
-    <Box mx="auto" maxWidth={400}>
-      <form onSubmit={form.onSubmit(handleSubmit)}>
-        <TextInput
-          label="Name"
-          placeholder="Your name"
-          {...form.getInputProps('name')}
-          withAsterisk
-        />
+    <Container size={420} my={40}>
+      <Title align="center">
+        Sign Up!
+      </Title>
 
-        <TextInput
-          mt="md"
-          label="Email"
-          placeholder="Your email"
-          {...form.getInputProps('email')}
-          withAsterisk
-        />
+      <Text c="dimmed" size="sm" ta="center" mt={5}>
+        Already Have an Account?{" "}
+        <AnchorLink to="/account/login">Sign in</AnchorLink>
+      </Text>
 
-        <PasswordInput
-          mt="md"
-          label="Password"
-          placeholder="Your password"
-          {...form.getInputProps('password')}
-          withAsterisk
-        />
+      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+        <form onSubmit={form.onSubmit(handleSubmit)}>
+          <TextInput
+            label="Name"
+            placeholder="Your name"
+            {...form.getInputProps('name')}
+            withAsterisk
+          />
 
-        <PasswordInput
-          mt="md"
-          label="Confirm Password"
-          placeholder="Confirm your password"
-          {...form.getInputProps('confirmPassword')}
-          withAsterisk
-        />
+          <TextInput
+            mt="md"
+            label="Email"
+            placeholder="Your email"
+            {...form.getInputProps('email')}
+            withAsterisk
+          />
 
-        <Checkbox
-          mt="md"
-          label={
-            <Text size="sm">
-              I agree to the <a href="#">terms and conditions</a>
-            </Text>
-          }
-          {...form.getInputProps('terms', { type: 'checkbox' })}
-        />
+          <PasswordInput
+            mt="md"
+            label="Password"
+            placeholder="Your password"
+            {...form.getInputProps('password')}
+            withAsterisk
+          />
 
-        <Group position="center" mt="xl">
-          <Button type="submit">Register</Button>
-        </Group>
-      </form>
-    </Box>
+          <PasswordInput
+            mt="md"
+            label="Confirm Password"
+            placeholder="Confirm your password"
+            {...form.getInputProps('confirmPassword')}
+            withAsterisk
+          />
+
+          <Checkbox
+            mt="md"
+            label={
+              <Text size="sm">
+                I agree to the <AnchorLink>terms and conditions</AnchorLink>.
+              </Text>
+            }
+            {...form.getInputProps('terms', { type: 'checkbox' })}
+          />
+
+          <Button type="submit" fullWidth mt="xl">Register Account</Button>
+        </form>
+      </Paper>
+
+    </Container>
   );
 }
 

@@ -3,17 +3,21 @@ import react from '@vitejs/plugin-react';
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 
 // https://vitejs.dev/config/
-export default defineConfig({
+
+
+
+export default defineConfig(({ isSsrBuild }) => ({
   envPrefix: 'APP',
-  ssr: {
-    noExternal: [
-      'primereact'
-    ]
-  },
   plugins: [
     TanStackRouterVite(),
     react()
   ],
+  ssr: {
+    noExternal: [
+      '@tanstack/react-query', 
+      //'@tanstack/router'
+    ]
+  },
   css: {
     preprocessorOptions: {
       scss: {
@@ -24,4 +28,4 @@ export default defineConfig({
   assetsInclude: [
     'src/docs/**/*.md'
   ]
-})
+}));

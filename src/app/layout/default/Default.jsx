@@ -1,11 +1,10 @@
 import React from 'react';
 import { Outlet } from '@tanstack/react-router';
-import { 
+import {
   AppShell,
   Burger,
   Group,
   Skeleton,
-  Container
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useAccount } from '../../queries/account.mjs';
@@ -17,11 +16,7 @@ const Layout = ({ navbar = false }) => {
   const account = useAccount();
   const isMobileOpened = navbar & mobileOpened;
   const isDesktopOpened = navbar && desktopOpened;
-
-  if (account.isLoading) {
-    //return null;
-  }
-
+  
   return (
     <AppShell
       header={{ height: 60 }}
@@ -35,13 +30,13 @@ const Layout = ({ navbar = false }) => {
       <AppShell.Header>
         <Group h="100%" px="md" ml="2" mr="20" justify="space-between">
           <div>
-          {navbar && (
-            <React.Fragment>
-              <Burger opened={isMobileOpened} onClick={toggleMobile} hiddenFrom="sm" size="sm" />
-              <Burger opened={isDesktopOpened} onClick={toggleDesktop} visibleFrom="sm" size="sm" />
-            </React.Fragment>
-          )}
-          {import.meta.env.APP_NAME}
+            {navbar && (
+              <React.Fragment>
+                <Burger opened={isMobileOpened} onClick={toggleMobile} hiddenFrom="sm" size="sm" />
+                <Burger opened={isDesktopOpened} onClick={toggleDesktop} visibleFrom="sm" size="sm" />
+              </React.Fragment>
+            )}
+            {import.meta.env.APP_NAME}
           </div>
           <NavBarAccount authenticated={account.data.authenticated} />
         </Group>
@@ -58,9 +53,7 @@ const Layout = ({ navbar = false }) => {
       )}
 
       <AppShell.Main>
-        <Container size={navbar ? null : 'sm'}>
         <Outlet />
-        </Container>
       </AppShell.Main>
     </AppShell>
   );

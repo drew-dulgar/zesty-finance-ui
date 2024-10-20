@@ -18,7 +18,10 @@ const useLogin = () => {
 
   return {
     login,
-    isLoading: account.isLoading || acountAuthenticate.isLoading,
+    isSuccess: acountAuthenticate.isSuccess && account.isSuccess && account?.data?.authenticated === true,
+    isPending: acountAuthenticate.isPending || account.isPending,
+    isError: acountAuthenticate.isError || account.isError,
+    error: acountAuthenticate.error || account.error
   };
 };
 
