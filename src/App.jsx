@@ -10,8 +10,6 @@ import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import { MantineProvider } from '@mantine/core';
 import QueryClientProvider from './QueryClientProvider';
 import theme from './theme';
-import { RouterProvider } from '@tanstack/react-router';
-
 import createRouter from './router';
 
 const App = ({ children }) => {

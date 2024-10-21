@@ -1,23 +1,27 @@
 import path from 'node:path';
+import fs from 'node:fs/promises';
 import express from 'express';
 
-const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
+const isProduction = process.env.NODE_ENV === 'production';
+const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD;
+const port = process.env.PORT || 3050;
 
-export async function createServer(
-  root = process.cwd(),
-  isProd = process.env.NODE_ENV === 'production',
-  hmrPort,
-) {
+const ssrManifest = isProduction
+  ? await fs.readFile('./dist/client/.vite/ssr-manifest.json', 'utf-8')
+  : undefined
+
+export const createServer = async () => {
   const app = express();
+  const root = process.cwd();
 
-  let vite
-  if (!isProd) {
-    vite = await (
-      await import('vite')
-    ).createServer({
+  let vite;
+
+  if (!isProduction) {
+    const { createServer: createViteServer } = await import('vite');
+
+    vite = await createViteServer({
       root,
-      logLevel: isTest ? 'error' : 'info',
-      server: {
+      server: { 
         middlewareMode: true,
         watch: {
           // During tests we edit the files too fast and sometimes chokidar
@@ -25,44 +29,25 @@ export async function createServer(
           usePolling: true,
           interval: 100,
         },
-        hmr: {
-          port: hmrPort,
-        },
       },
       appType: 'custom',
-    })
-    // use vite's connect instance as middleware
-    app.use(vite.middlewares)
+      logLevel: isTest ? 'error' : 'info',
+    });
+    app.use(vite.middlewares);
   } else {
-    app.use((await import('compression')).default())
+    const compression = (await import('compression')).default;
+    const sirv = (await import('sirv')).default;
+
+    app.use(compression());
+    app.use('/assets', sirv('./dist/client', { extensions: [] }));
   }
 
   app.use('*', async (req, res) => {
     try {
-      const url = req.originalUrl
-
-      if (path.extname(url) !== '') {
-        console.warn(`${url} is not valid router path`)
-        res.status(404)
-        res.end(`${url} is not valid router path`)
-        return
-      }
-
-      // Best effort extraction of the head from vite's index transformation hook
-      let viteHead = !isProd
-        ? await vite.transformIndexHtml(
-          url,
-          `<html><head></head><body></body></html>`,
-        )
-        : ''
-
-      viteHead = viteHead.substring(
-        viteHead.indexOf('<head>') + 6,
-        viteHead.indexOf('</head>'),
-      )
+      const url = req.originalUrl;
 
       const entry = await (async () => {
-        if (!isProd) {
+        if (!isProduction) {
           return vite.ssrLoadModule('/src/entry-server.jsx');
         } else {
           return import('./dist/server/entry-server.js');
@@ -70,14 +55,14 @@ export async function createServer(
       })();
 
       console.info('Rendering: ', url, '...')
-      const { html, router } = await entry.render(url);
+      const { html, router } = await entry.render(url, ssrManifest);
 
       res.statusCode = router.hasNotFoundMatch() ? 404 : 200
       res.setHeader('Content-Type', 'text/html')
       res.end(`<!DOCTYPE html>${html}`);
 
     } catch (e) {
-      !isProd && vite.ssrFixStacktrace(e);
+      !isProduction && vite.ssrFixStacktrace(e);
       console.info(e.stack);
       res.status(500).end(e.stack);
     }
@@ -89,8 +74,8 @@ export async function createServer(
 if (!isTest) {
   createServer().then(async ({ app }) =>
     // Start http server
-    app.listen(3050, () => {
-      console.log(`Server started at http://localhost:3050`);
+    app.listen(port, () => {
+      console.log(`Server started at http://localhost:${port}`);
     })
   )
 }
