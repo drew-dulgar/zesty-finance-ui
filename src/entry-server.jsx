@@ -3,8 +3,12 @@ import ReactDOMServer from 'react-dom/server';
 import { createMemoryHistory } from '@tanstack/react-router';
 import { StartServer } from '@tanstack/start/server';
 import createRouter from './router';
+import {useCredentialStore} from './app/store';
 
-export const render = async (url) => {
+export const render = async (url, ssrManifest, cookies) => {
+  // make the cookie vars globally available
+  useCredentialStore.getState().setCookies(cookies);
+
   const router = createRouter();
 
   const memoryHistory = createMemoryHistory({
@@ -17,7 +21,9 @@ export const render = async (url) => {
 
   await router.load();
 
-  const html = ReactDOMServer.renderToString(<StartServer router={router} />);
+  const html = ReactDOMServer.renderToString(
+    <StartServer router={router} />
+  );
 
   return {
     html,

@@ -1,10 +1,12 @@
 import React from 'react';
-import { createRootRoute } from '@tanstack/react-router';
+import { createRootRoute, useLoaderData } from '@tanstack/react-router';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import mantineCssUrl from '@mantine/core/styles.css?url'
 import DefaultLayout from '../app/layout/default/Default';
 import Error404 from '../app/components/errors/Error404';
 import RootDocument from '../RootDocument';
 import App from '../App';
+import AccountService from '../app/services/AccountService.mjs';
 
 const scripts = {
   dev: [
@@ -90,12 +92,35 @@ export const Route = createRootRoute({
     return useLinks;
 
   },
+  beforeLoad: () => ({
+    accountQueryOptions: {
+      queryKey: ['QUERY_ACCOUNT'],
+      queryFn: AccountService.get,
+    }
+  }),
+  loader: async ({
+    context: {
+      queryClient,
+      accountQueryOptions
+    }
+  }) => {
+    await queryClient.prefetchQuery(accountQueryOptions);
+
+    return {
+      dehydratedState: dehydrate(queryClient)
+    };
+  },
   component: () => {
+    const dehydratedState = useLoaderData({ select: loader => loader.dehydratedState});
+
     return (
       <RootDocument>
         <App>
-          <DefaultLayout />
+          <HydrationBoundary state={dehydratedState}>
+            <DefaultLayout />
+          </HydrationBoundary>
         </App>
+
       </RootDocument>
     );
   },

@@ -1,1 +1,1 @@
-export { default as useAccountStore } from './account.mjs';
+export { default as useCredentialStore } from './credentials.mjs';

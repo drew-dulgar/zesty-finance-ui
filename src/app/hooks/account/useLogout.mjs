@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { useAccount, useAccountLogout } from '../../queries';
 
-
 const useLogout = () => {
-  const account = useAccount();
+  const account = useAccount({
+    enabled: false
+  });
   const accountLogout = useAccountLogout();
 
   const logout = () => {

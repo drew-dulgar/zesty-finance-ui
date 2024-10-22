@@ -1,6 +1,7 @@
 import path from 'node:path';
 import fs from 'node:fs/promises';
 import express from 'express';
+import cookieParser from 'cookie-parser';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD;
@@ -42,6 +43,8 @@ export const createServer = async () => {
     app.use('/assets', sirv('./dist/client', { extensions: [] }));
   }
 
+  app.use(cookieParser());
+
   app.use('*', async (req, res) => {
     try {
       const url = req.originalUrl;
@@ -55,7 +58,7 @@ export const createServer = async () => {
       })();
 
       console.info('Rendering: ', url, '...')
-      const { html, router } = await entry.render(url, ssrManifest);
+      const { html, router } = await entry.render(url, ssrManifest, req.cookies);
 
       res.statusCode = router.hasNotFoundMatch() ? 404 : 200
       res.setHeader('Content-Type', 'text/html')

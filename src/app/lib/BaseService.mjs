@@ -1,3 +1,5 @@
+import { isServer } from '@tanstack/react-query';
+import { useCredentialStore } from '../store';
 
 class BaseService {
   baseUrl;
@@ -8,13 +10,25 @@ class BaseService {
     this.baseEndpoint = baseEndpoint;
   }
 
+  getCredentials() {
+    if (isServer) {
+      const { cookies } = useCredentialStore.getState();
+
+      return {
+        'Cookie': `connect.sid=${cookies['connect.sid']}`
+      }
+    }
+
+    return {};
+  }
+
   buildUrl(endpoint, queryParams = {}) {
     let url = `${this.baseUrl}${(this.baseEndpoint + '/' + endpoint).replace('//', '/')}`;
-      
+
     if (url.charAt(url.length - 1) === '/') {
       url = url.slice(0, -1);
     }
-  
+
     if (Object.keys(queryParams).length > 0) {
       Object.keys(queryParams).forEach((key) => {
         if (typeof queryParams[key] === 'undefined') {
@@ -24,7 +38,7 @@ class BaseService {
 
       url += `?${new URLSearchParams(queryParams)}`;
     }
-    
+
     return url;
   }
 
@@ -35,6 +49,7 @@ class BaseService {
     const defaultHeaders = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
+      ...this.getCredentials(),
     };
 
     const options = {

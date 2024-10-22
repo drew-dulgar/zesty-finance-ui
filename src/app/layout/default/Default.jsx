@@ -51,7 +51,6 @@ const Layout = ({ navbar = false }) => {
             ))}
         </AppShell.Navbar>
       )}
-
       <AppShell.Main>
         <Outlet />
       </AppShell.Main>

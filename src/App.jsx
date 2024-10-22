@@ -7,19 +7,19 @@ import '@mantine/core/styles.css';
 
 import React from 'react';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { MantineProvider } from '@mantine/core';
-import QueryClientProvider from './QueryClientProvider';
+import getQueryClient from './queryClient.mjs';
 import theme from './theme';
-import createRouter from './router';
 
 const App = ({ children }) => {
-  const router = createRouter();
+  const queryClient = getQueryClient();
 
   return (
     <React.StrictMode>
       <MantineProvider theme={theme}>
-        <QueryClientProvider>
-            {children}
+        <QueryClientProvider client={queryClient}>
+          {children}
         </QueryClientProvider>
       </MantineProvider>
     </React.StrictMode>

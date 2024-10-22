@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { useAccount, useAccountAuthenticate } from '../../queries';
 
-
 const useLogin = () => {
-  const account = useAccount();
+  const account = useAccount({
+    enabled: false
+  });
   const acountAuthenticate = useAccountAuthenticate();
 
   const login = (email, password) => {
