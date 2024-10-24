@@ -4,11 +4,10 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node server",
-    "build": "npm run build:client && npm run build:server",
-    "build:client": "vite build --outDir dist/client --ssrManifest ",
-    "build:server": "vite build --outDir dist/server --ssr src/entry-server.jsx",
-    "preview": "cross-env NODE_ENV=production node server"
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "NODE_ENV=production node dist/server/index.mjs",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
@@ -20,19 +19,20 @@
     "@mantine/ssr": "^6.0.22",
     "@tabler/icons-react": "3.18.0",
     "@tanstack/react-query": "^5.56.2",
-    "@tanstack/react-router": "^1.74.0",
-    "@tanstack/start": "^1.74.4",
     "dayjs": "^1.11.13",
+    "eslint": "^8.55.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sirv": "^2.0.4",
-    "superjson": "^2.2.1",
     "vike": "^0.4.197",
+    "vike-node": "^0.1.16",
+    "vike-react": "^0.5.7",
+    "vike-react-query": "^0.1.1",
     "zustand": "^5.0.0"
   },
   "devDependencies": {
-    "@tanstack/router-devtools": "^1.74.4",
-    "@tanstack/router-plugin": "^1.58.12",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.2.25",
     "@vitejs/plugin-react": "^4.3.2",
@@ -45,6 +45,7 @@
     "postcss-preset-mantine": "^1.17.0",
     "postcss-simple-vars": "^7.0.1",
     "sass-embedded": "^1.80.3",
+    "sirv": "^2.0.4",
     "vite": "^5.4.8"
   }
 }

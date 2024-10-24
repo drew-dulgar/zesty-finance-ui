@@ -1,25 +1,23 @@
-import { resolve } from 'path'
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
+import vike from 'vike/plugin';
+import vikeNode from 'vike-node/plugin';
 
 // https://vitejs.dev/config/
-
-export default defineConfig(({ isSsrBuild }) => {
+export default defineConfig(() => {
   const config = {
-    define: {
-      'process.env': {}
+    server: {
+      port: 3050,
     },
     envPrefix: 'APP',
     plugins: [
-      TanStackRouterVite(),
-      react()
+      react(),
+      vike(),
+      vikeNode({
+        entry: 'server/index.js',
+        standalone: true
+      }),
     ],
-    ssr: {
-      external: [
-
-      ]
-    },
     css: {
       preprocessorOptions: {
         scss: {
@@ -32,13 +30,5 @@ export default defineConfig(({ isSsrBuild }) => {
     ]
   };
 
-  if (!isSsrBuild) {
-    config.build = {};
-    config.build.lib = {
-      entry: resolve(__dirname, 'src/entry-client.jsx'),
-      name: 'ZestyFinance',
-      fileName: 'entry-client',
-    };
-  }
   return config;
 });

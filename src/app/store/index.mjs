@@ -1,1 +1,0 @@
-export { default as useCredentialStore } from './credentials.mjs';
