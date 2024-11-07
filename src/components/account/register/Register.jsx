@@ -1,4 +1,4 @@
-
+import React from 'react';
 import { useEffect } from 'react';
 import { useForm } from '@mantine/form';
 import {
@@ -7,14 +7,12 @@ import {
   PasswordInput,
   Button,
   Container,
-  Group,
   Checkbox,
   Text,
   Paper,
   Anchor
 } from '@mantine/core';
 import { useAccountCreate } from '../../../queries/account.mjs';
-
 
 const Register = () => {
   const accountCreate = useAccountCreate();
