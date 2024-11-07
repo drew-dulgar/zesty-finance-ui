@@ -4,6 +4,7 @@ import Error from './Error/Error';
 const Error404 = () => (
   <Error
     errorCode="404"
+    errorTitle="Not Found"
     title="You have found a secret place"
     buttonProps={{
       to: '/',

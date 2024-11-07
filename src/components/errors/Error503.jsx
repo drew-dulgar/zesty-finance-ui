@@ -4,6 +4,7 @@ import Error from './Error/Error';
 const Error503 = () => (
   <Error
     errorCode="503"
+    errorTitle="Server Unavailable"
     title="Whoops! Something bad just happened..."
     buttonProps={{
       to: '',

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Button } from '@mantine/core';
-import { navigate } from 'vike/client/router'
+import { navigate } from 'vike/client/router';
 import { usePageContext } from 'vike-react/usePageContext';
 
 const ButtonLink = ({
   to,
   disabled = false,
-  disabledWhenActive = true,
+  disabledWhenActive = false,
   ...props
 }) => {
   const pageContext = usePageContext();

@@ -5,19 +5,7 @@ class AccountService extends BaseService {
     return super.GET('/');
   }
 
-  create = ({
-    email,
-    password,
-    firstName,
-    middleName,
-    lastName
-  } = {}) => super.POST('/create', {
-    email,
-    password,
-    firstName,
-    middleName,
-    lastName
-  });
+  create = (body = {}) => super.POST('/', body);
 
   authenticate = ({email, password} = {}) => super.POST('/auth', {
     email,

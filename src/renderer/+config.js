@@ -14,6 +14,12 @@ export default {
       env: { 
         server: true 
       }
+    },
+    authorize: {
+      env: {
+        server: true,
+        client: true,
+      }
     }
   },
   hydrationCanBeAborted: true

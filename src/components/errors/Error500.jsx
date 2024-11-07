@@ -4,6 +4,7 @@ import Error from './Error/Error';
 const Error500 = () => (
   <Error
     errorCode="500"
+    errorTitle="Internal Server Error"
     title="Whoops! Something bad just happened..."
     buttonProps={{
       to: '',

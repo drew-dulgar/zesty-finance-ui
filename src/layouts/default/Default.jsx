@@ -5,14 +5,17 @@ import {
   Group,
   Skeleton,
 } from '@mantine/core';
-import { useAccount } from '../../queries/account.mjs';
+
+import Authorizer from '../../components/Authorizer';
+import { useAccount } from '../../queries';
 import { useNavbarStore } from '../../store/index.mjs';
 import NavBarAccount from './NavBarAccount';
 
 const Layout = ({ navbar = true, children }) => {
-  const {open: navbarOpen, toggleNavbar} = useNavbarStore();
   const account = useAccount();
+  const { open: navbarOpen, toggleNavbar } = useNavbarStore();
   const isNavbarOpen = navbar && navbarOpen;
+  const accountData = account?.data || {};
 
   return (
     <AppShell
@@ -29,12 +32,12 @@ const Layout = ({ navbar = true, children }) => {
           <div>
             {navbar && (
               <React.Fragment>
-                <Burger opened={isNavbarOpen} onClick={toggleNavbar}  size="sm" />
+                <Burger opened={isNavbarOpen} onClick={toggleNavbar} size="sm" />
               </React.Fragment>
             )}
             {import.meta.env.APP_NAME}
           </div>
-          <NavBarAccount account={account.data || {}} />
+          <NavBarAccount account={accountData} />
         </Group>
       </AppShell.Header>
       {navbar && (
@@ -48,7 +51,9 @@ const Layout = ({ navbar = true, children }) => {
         </AppShell.Navbar>
       )}
       <AppShell.Main>
-        {children}
+        <Authorizer account={account}>
+          {children}
+        </Authorizer>
       </AppShell.Main>
     </AppShell>
   );

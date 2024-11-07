@@ -4,6 +4,7 @@ import Error from './Error/Error';
 const Error401 = () => (
   <Error
     errorCode="401"
+    errorTitle="Not Authorized"
     title="Who are you?"
     buttonProps={{
       to: '/account/login',

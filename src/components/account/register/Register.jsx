@@ -1,4 +1,5 @@
 
+import { useEffect } from 'react';
 import { useForm } from '@mantine/form';
 import {
   Title,
@@ -12,30 +13,37 @@ import {
   Paper,
   Anchor
 } from '@mantine/core';
+import { useAccountCreate } from '../../../queries/account.mjs';
+
 
 const Register = () => {
+  const accountCreate = useAccountCreate();
+
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
-      name: '',
+      firstName: '',
+      middleName: '',
+      lastName: '',
       email: '',
       password: '',
-      confirmPassword: '',
+      passwordConfirm: '',
       tos: false,
-    },
-
-    validate: {
-      name: (value) => (value ? null : 'Name is required'),
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-      password: (value) =>
-        value.length >= 6 ? null : 'Password must be at least 6 characters',
-      confirmPassword: (value, values) =>
-        value === values.password ? null : 'Passwords do not match',
-      tos: (value) => (value ? null : 'You must accept the terms and conditions'),
     },
   });
 
+  const validationErrors = accountCreate?.data?.validationErrors || {};
+  const hasValidationErrors = Object.keys(validationErrors).length > 0;
+
+  useEffect(() => {
+    if (validationErrors) {
+
+      form.setErrors(validationErrors);
+    }
+  }, [hasValidationErrors]);
+
   const handleSubmit = (values) => {
-    console.log('Form values:', values);
+    accountCreate.mutate(values);
   };
 
   return (
@@ -51,13 +59,6 @@ const Register = () => {
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <form onSubmit={form.onSubmit(handleSubmit)}>
-          <TextInput
-            label="Name"
-            placeholder="Your name"
-            {...form.getInputProps('name')}
-            withAsterisk
-          />
-
           <TextInput
             mt="md"
             label="Email"
@@ -78,7 +79,7 @@ const Register = () => {
             mt="md"
             label="Confirm Password"
             placeholder="Confirm your password"
-            {...form.getInputProps('confirmPassword')}
+            {...form.getInputProps('passwordConfirm')}
             withAsterisk
           />
 
@@ -89,10 +90,10 @@ const Register = () => {
                 I agree to the <Anchor>terms and conditions</Anchor>.
               </Text>
             }
-            {...form.getInputProps('terms', { type: 'checkbox' })}
+            {...form.getInputProps('tos', { type: 'checkbox' })}
           />
 
-          <Button type="submit" fullWidth mt="xl">Register Account</Button>
+          <Button type="submit" fullWidth mt="xl" disabled={false}>Register Account</Button>
         </form>
       </Paper>
 

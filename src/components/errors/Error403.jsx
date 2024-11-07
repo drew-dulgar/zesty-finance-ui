@@ -4,6 +4,7 @@ import Error from './Error/Error';
 const Error403 = () => (
   <Error
     errorCode="403"
+    errorTitle="Forbidden"
     title="Why are you doing that?"
     buttonProps={{
       to: '/',
