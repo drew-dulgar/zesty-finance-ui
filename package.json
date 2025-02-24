@@ -23,7 +23,7 @@
     "dayjs": "^1.11.13",
     "react": "^18.2.0",
     "react-dom": "^19.0.0",
-    "react-error-boundary": "^4.1.2",
+    "react-error-boundary": "^5.0.0",
     "vike": "^0.4.223",
     "vike-node": "^0.3.6",
     "vike-react": "^0.5.13",
