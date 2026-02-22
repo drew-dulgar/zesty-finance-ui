@@ -1,21 +1,20 @@
-import React from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from '@mantine/form';
 import {
   Title,
-  TextInput,
-  PasswordInput,
   Button,
   Container,
-  Checkbox,
   Text,
   Paper,
-  Anchor
+  Anchor,
+  Stepper,
 } from '@mantine/core';
-import { useAccountCreate } from '../../../queries/account.mjs';
+import RegisterVerificationCodeForm from './RegisterVerificationCodeForm';
 
 const Register = () => {
-  const accountCreate = useAccountCreate();
+  const [active, setActive] = useState(1);
+  const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
+  const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
 
   const form = useForm({
     mode: 'uncontrolled',
@@ -30,22 +29,9 @@ const Register = () => {
     },
   });
 
-  const validationErrors = accountCreate?.data?.validationErrors || {};
-  const hasValidationErrors = Object.keys(validationErrors).length > 0;
-
-  useEffect(() => {
-    if (validationErrors) {
-
-      form.setErrors(validationErrors);
-    }
-  }, [hasValidationErrors]);
-
-  const handleSubmit = (values) => {
-    accountCreate.mutate(values);
-  };
 
   return (
-    <Container size={420} my={40}>
+    <Container my={40}>
       <Title align="center">
         Sign Up!
       </Title>
@@ -56,43 +42,13 @@ const Register = () => {
       </Text>
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <form onSubmit={form.onSubmit(handleSubmit)}>
-          <TextInput
-            mt="md"
-            label="Email"
-            placeholder="Your email"
-            {...form.getInputProps('email')}
-            withAsterisk
-          />
-
-          <PasswordInput
-            mt="md"
-            label="Password"
-            placeholder="Your password"
-            {...form.getInputProps('password')}
-            withAsterisk
-          />
-
-          <PasswordInput
-            mt="md"
-            label="Confirm Password"
-            placeholder="Confirm your password"
-            {...form.getInputProps('passwordConfirm')}
-            withAsterisk
-          />
-
-          <Checkbox
-            mt="md"
-            label={
-              <Text size="sm">
-                I agree to the <Anchor>terms and conditions</Anchor>.
-              </Text>
-            }
-            {...form.getInputProps('tos', { type: 'checkbox' })}
-          />
-
-          <Button type="submit" fullWidth mt="xl" disabled={false}>Register Account</Button>
-        </form>
+        <Stepper active={active} onStepClick={setActive} allowNextStepsSelect={false}>
+          <Stepper.Step label="Request Confirmation Code" description="Enter your email address to receive a confirmation code">
+            <RegisterVerificationCodeForm form={form} />
+          </Stepper.Step>
+          <Stepper.Step label="Confirm Email Address" description="Enter the code sent to your email address">
+          </Stepper.Step>
+        </Stepper>
       </Paper>
 
     </Container>

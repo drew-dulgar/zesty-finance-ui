@@ -1,0 +1,14 @@
+{
+  "projectName": "zesty-finance-ui",
+  "mode": "file-router",
+  "typescript": true,
+  "packageManager": "npm",
+  "includeExamples": false,
+  "addOnOptions": {},
+  "envVarValues": {},
+  "git": true,
+  "routerOnly": false,
+  "version": 1,
+  "framework": "react-cra",
+  "chosenAddOns": ["tanstack-query", "t3env"]
+}

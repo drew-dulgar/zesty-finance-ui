@@ -6,6 +6,8 @@ export const QUERY_ACCOUNT_CREATE = 'QUERY_ACCOUNT_CREATE';
 export const QUERY_ACCOUNT_AUTHORIZE = 'QUERY_ACCOUNT_AUTHORIZE';
 export const QUERY_ACCOUNT_LOGOUT = 'QUERY_ACCOUNT_LOGOUT';
 
+export const MUTATION_ACCOUNT_EMAIL_VERIFICATION_CODE = 'MUTATION_ACCOUNT_EMAIL_VERIFICATION_CODE';
+
 export const useAccount = (options = {}) => useSuspenseQuery({
   ...options,
   queryKey: [QUERY_ACCOUNT],
@@ -17,6 +19,12 @@ export const useAccount = (options = {}) => useSuspenseQuery({
     authorized: {}
   },
 });
+
+export const useAccountEmailVerificationCode = (options = {}) => useMutation({
+  ...options,
+  mutationKey: [MUTATION_ACCOUNT_EMAIL_VERIFICATION_CODE],
+  mutationFn: AccountService.emailVerificationCode
+})
 
 export const useAccountCreate = (options = {}) => useMutation({
   ...options,

@@ -1,4 +1,4 @@
-import BaseService from '../lib/BaseService.mjs';
+import BaseService from './BaseService.mjs';
 
 class AccountService extends BaseService {
   get = () => {
@@ -10,6 +10,10 @@ class AccountService extends BaseService {
   authenticate = ({email, password} = {}) => super.POST('/auth', {
     email,
     password
+  });
+
+  emailVerificationCode = (email) => super.POST('/account/verification-code', {
+    email
   });
 
   logout = () => super.DELETE('/auth');

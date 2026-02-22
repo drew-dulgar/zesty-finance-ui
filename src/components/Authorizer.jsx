@@ -1,15 +1,14 @@
 import React from 'react';
-import { Error401, Error403, Error500 } from './errors';
-import { usePageContext } from 'vike-react/usePageContext';
+import { Error401, Error403, Error500 } from './common/errors';
 
 const Authorizer = ({ account, children }) => {
-  const pageContext = usePageContext();
   const accountData = account?.data || {};
 
   if (account.isError) {
     return <Error500 />
   }
 
+  /*
   // page config
   const pageConfigAuthorize = pageContext?.config?.authorize;
 
@@ -23,9 +22,12 @@ const Authorizer = ({ account, children }) => {
     }
 
     const { authenticated, action, resource } = (pageConfigAuthorize || {});
+    */
     const accountAuthenticated = accountData?.authenticated || false;
     const accountAuthorized = accountData?.authorized || {};
 
+    const action = ''; // TODO fix
+    const resource = ''; // TODO fix
     if ((action && !resource) || (resource && !action)) {
       throw new Error('Incorrect configuration: page action and resource config requires both to be set');
     }
@@ -44,7 +46,7 @@ const Authorizer = ({ account, children }) => {
     }
 
     return <Error401 />
-  }
+  //}
 };
 
 export default Authorizer;

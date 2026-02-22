@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { usePageContext } from 'vike-react/usePageContext';
 import {
   Avatar,
   UnstyledButton,
@@ -19,15 +18,11 @@ import useLogout from '../../hooks/account/useLogout.mjs';
 const ROUTE_LOGIN = '/account/login';
 const ROUTE_REGISTER = '/account/register';
 
-
 const NavBarAccount = ({ account }) => {
   const { logout: handleLogout } = useLogout();
   const [accountMenuOpened, setAccountMenuOpened] = useState(false);
   const authenticated = account?.authenticated || false;
   
-  const pageContext = usePageContext();
-  const config = pageContext?.config || {};
-
   
   if (authenticated) {
     const user = account?.user || {};
