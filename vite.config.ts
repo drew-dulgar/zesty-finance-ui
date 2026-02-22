@@ -15,13 +15,6 @@ const config = defineConfig({
     tanstackStart(),
     viteReact(),
   ],
-  css: {
-    preprocessorOptions: {
-      scss: {
-        api: 'modern-compiler' // or "modern"
-      }
-    }
-  },
   assetsInclude: [
     'src/docs/**/*.md'
   ]

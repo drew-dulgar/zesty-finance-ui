@@ -10,9 +10,9 @@ import React from 'react';
 import MantineProvider from '../integrations/mantine-ui/root-provider';
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools';
 import TanStackQueryProvider from '../integrations/tanstack-query/root-provider';
-import { Error404 } from '@/components/common/errors';
 
-import appCss from '../styles.css?url';
+import appCss from './__root.css?url';
+
 
 interface MyRouterContext {
   queryClient: QueryClient;
@@ -39,21 +39,21 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       },
     ],
   }),
-  shellComponent: RootDocument,
-  notFoundComponent: Error404
+  shellComponent: RootDocument
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <React.StrictMode>
-      <MantineProvider>
         <html lang="en">
           <head>
             <HeadContent />
           </head>
           <body>
             <TanStackQueryProvider>
+              <MantineProvider>
               {children}
+              </MantineProvider>
               <TanStackDevtools
                 config={{
                   position: 'bottom-right',
@@ -70,7 +70,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             <Scripts />
           </body>
         </html>
-      </MantineProvider>
+      
     </React.StrictMode>
   );
 }
